@@ -18,7 +18,7 @@ Feature: Listagem e Filtro de Reservas - GET /booking
 
   @regression
   Scenario: Filtrar reservas pelo primeiro nome
-    When eu envio uma requisição GET para listar reservas filtrando por firstname "Carlos"
+    When eu envio uma requisição GET para listar reservas filtrando apenas por firstname "Carlos"
     Then a resposta deve ter status 200
     And a resposta deve ser uma lista de IDs válidos
     And a lista deve conter o ID da reserva de referência
@@ -32,7 +32,7 @@ Feature: Listagem e Filtro de Reservas - GET /booking
 
   @regression
   Scenario: Filtrar reservas pelo nome completo (firstname e lastname)
-    When eu envio uma requisição GET para listar reservas filtrando por firstname "Carlos" e lastname "Drummond"
+    When eu envio uma requisição GET para listar reservas filtrando por nome completo com firstname "Carlos" e lastname "Drummond"
     Then a resposta deve ter status 200
     And a resposta deve ser uma lista de IDs válidos
     And a lista deve conter o ID da reserva de referência
@@ -53,6 +53,6 @@ Feature: Listagem e Filtro de Reservas - GET /booking
 
   @regression
   Scenario: Filtrar por nome inexistente deve retornar lista vazia
-    When eu envio uma requisição GET para listar reservas filtrando por firstname "NomeQueNaoExiste99"
+    When eu envio uma requisição GET para listar reservas filtrando apenas por firstname "NomeQueNaoExiste99"
     Then a resposta deve ter status 200
     And a resposta deve ser uma lista vazia de IDs

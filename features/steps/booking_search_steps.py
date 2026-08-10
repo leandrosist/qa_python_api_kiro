@@ -48,7 +48,7 @@ def step_get_all_bookings(context):
     context.response = context.booking_client.get_bookings()
 
 
-@when('eu envio uma requisição GET para listar reservas filtrando por firstname "{firstname}"')
+@when('eu envio uma requisição GET para listar reservas filtrando apenas por firstname "{firstname}"')
 def step_get_bookings_by_firstname(context, firstname: str):
     """Executa GET /booking?firstname={firstname}."""
     context.response = context.booking_client.get_bookings(firstname=firstname)
@@ -60,7 +60,7 @@ def step_get_bookings_by_lastname(context, lastname: str):
     context.response = context.booking_client.get_bookings(lastname=lastname)
 
 
-@when('eu envio uma requisição GET para listar reservas filtrando por firstname "{firstname}" e lastname "{lastname}"')
+@when('eu envio uma requisição GET para listar reservas filtrando por nome completo com firstname "{firstname}" e lastname "{lastname}"')
 def step_get_bookings_by_full_name(context, firstname: str, lastname: str):
     """Executa GET /booking?firstname={firstname}&lastname={lastname}."""
     context.response = context.booking_client.get_bookings(
