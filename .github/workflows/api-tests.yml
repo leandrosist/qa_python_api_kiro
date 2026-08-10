@@ -1,0 +1,44 @@
+name: API Tests - Restful Booker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    name: Run API Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Behave tests with Allure formatter
+        env:
+          BASE_URL: https://restful-booker.herokuapp.com
+          AUTH_USER: admin
+          AUTH_PASS: password123
+        run: |
+          python -m behave -f allure_behave.formatter:AllureFormatter -o allure-results
+
+      - name: Upload Allure results as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
+          retention-days: 7
