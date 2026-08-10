@@ -1,0 +1,18 @@
+{
+  "name": "run_tests",
+  "description": "Executa os testes automatizados de API com Behave, permitindo filtrar por tags (ex: smoke, regression) ou arquivo específico.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "tag": {
+        "type": "string",
+        "description": "Tag do Behave para filtrar os testes (ex: smoke, regression)"
+      },
+      "feature": {
+        "type": "string",
+        "description": "Caminho do arquivo .feature específico (ex: features/booking.feature)"
+      }
+    }
+  },
+  "command": "python -m behave {feature} --tags=@{tag}"
+}

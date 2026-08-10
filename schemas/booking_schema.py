@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel, Field
 
 
@@ -24,3 +25,32 @@ class BookingResponse(BaseModel):
 
     bookingid: int = Field(..., description="ID da reserva criada")
     booking: Booking = Field(..., description="Dados da reserva criada")
+
+
+class BookingId(BaseModel):
+    """Item retornado pela listagem GET /booking."""
+
+    bookingid: int = Field(..., description="ID de uma reserva existente")
+
+
+class BookingListResponse(BaseModel):
+    """Resposta da listagem GET /booking — lista de IDs."""
+
+    root: List[BookingId] = Field(default_factory=list)
+
+    @classmethod
+    def model_validate_list(cls, data: list) -> "BookingListResponse":
+        """Valida uma lista de dicts com bookingid e retorna o modelo.
+
+        Args:
+            data: Lista de dicts retornada pela API.
+
+        Returns:
+            BookingListResponse com os IDs validados.
+        """
+        items = [BookingId.model_validate(item) for item in data]
+        return cls(root=items)
+
+    def contains_id(self, booking_id: int) -> bool:
+        """Verifica se um ID específico está presente na listagem."""
+        return any(item.bookingid == booking_id for item in self.root)

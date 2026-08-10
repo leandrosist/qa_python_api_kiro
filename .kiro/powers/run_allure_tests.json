@@ -1,0 +1,14 @@
+{
+  "name": "run_allure_tests",
+  "description": "Executa a suíte de testes do Behave e gera os arquivos JSON do Allure na pasta allure-results.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "tag": {
+        "type": "string",
+        "description": "Tag de filtro para a execução do Behave."
+      }
+    }
+  },
+  "command": "python -m behave --tags=@{tag} -f allure_behave.formatter:AllureFormatter -o allure-results"
+}
